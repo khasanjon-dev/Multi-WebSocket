@@ -1,0 +1,37 @@
+services:
+  django:
+    build:
+      context: .
+      dockerfile: compose/local/django/Dockerfile
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    command: bash /start
+    volumes:
+      - local_static_volume:/app/static
+      - local_media_volume:/app/media
+      - .:/app
+
+  redis:
+    image: redis:7.4.2
+    ports:
+      - "6380:6379"
+    restart: always
+
+  postgres:
+    image: postgres:16.6
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    ports:
+      - "5436:5432"
+
+volumes:
+  local_postgres_data:
+  local_static_volume:
+  local_media_volume:
