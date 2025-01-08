@@ -14,15 +14,19 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # third party apps
+    "rest_framework",
+    "drf_spectacular",
+    # my apps
+    "apps.chat",
 ]
-THIRD_PARTY_APPS = ["channels"]
-INSTALLED_APPS += THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -90,10 +94,12 @@ USE_I18N = True
 
 USE_TZ = True
 
+REST_FRAMEWORK = {}
+
 
 STATIC_URL = "static/"
 MEDIA_URL = "media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
@@ -110,3 +116,6 @@ CACHES = {
         "KEY_PREFIX": "chat",
     }
 }
+
+# SWAGGER (DRF_SPECTACULAR)
+REST_FRAMEWORK["DEFAULT_SCHEMA_CLASS"] = "drf_spectacular.openapi.AutoSchema"
