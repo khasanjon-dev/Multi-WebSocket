@@ -8,7 +8,6 @@ from apps.chat.models import Message, Assignment, Mention, ChatSession
 
 
 class AllMessagesConsumer(AsyncWebsocketConsumer):
-
     async def connect(self):
         self.session_id = self.scope["url_route"]["kwargs"]["session_id"]
         self.room_group_name = f"all_messages_{self.session_id}"
